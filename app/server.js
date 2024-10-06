@@ -21,13 +21,13 @@ const businessRoutes = require('./routes/businessRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const authRoutes = require('./routes/userRoutes');
 
-app.use('/api/categories', categoryRoutes);
+app.use('/api/category', categoryRoutes);
 app.use('/api/business', businessRoutes);
-app.use('/api/bookings', bookingRoutes);
+app.use('/api/booking', bookingRoutes);
 app.use('/api/user', authRoutes);
 
 // Serverio paleidimas
-const PORT = process.env.PORT || 5580;
+const PORT = process.env.PORT || 5600;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

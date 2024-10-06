@@ -1,8 +1,19 @@
-// src/components/AppointmentModal.js
-// @ts-ignore
-import React, { useState } from 'react';
+// src/components/AppointmentModal.tsx
+import React from 'react';
 
-const AppointmentModal = ({ business, isOpen, closeModal }) => {
+// Define the Business type according to your structure
+interface Business {
+    name: string;
+    // Add any other properties that are part of the business object
+}
+
+interface AppointmentModalProps {
+    business: Business;
+    isOpen: boolean;
+    closeModal: () => void; // Define the type for the closeModal function
+}
+
+const AppointmentModal: React.FC<AppointmentModalProps> = ({ business, isOpen, closeModal }) => {
     if (!isOpen) return null;
 
     return (

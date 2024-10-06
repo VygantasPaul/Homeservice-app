@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AvatarDropdown = () => {
+const AvatarDropdown: React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const navigate = useNavigate();
+
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const handleLogout = () => {
         localStorage.removeItem('user');
@@ -19,8 +22,14 @@ const AvatarDropdown = () => {
             />
             {dropdownOpen && (
                 <ul>
-                    <li onClick={() => navigate('/my-bookings')}>My Bookings</li>
-                    <li onClick={handleLogout}>Logout</li>
+                    {user.token ? ( // Check if the user is logged in
+                        <>
+                            <li onClick={() => navigate('/booking')}>My Bookings</li>
+                            <li onClick={handleLogout}>Logout</li>
+                        </>
+                    ) : (
+                        <li onClick={() => navigate('/login')}>Login</li> // Show login option if not logged in
+                    )}
                 </ul>
             )}
         </div>

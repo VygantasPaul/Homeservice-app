@@ -1,14 +1,18 @@
-// src/components/CategoryList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const CategoryList = () => {
-    const [categories, setCategories] = useState([]);
+interface Category {
+    id: string;
+    name: string;
+}
+
+const CategoryList: React.FC = () => {
+    const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('/api/categories');
+                const response = await axios.get<Category[]>('http://localhost:5600/api/category');
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -22,8 +26,8 @@ const CategoryList = () => {
         <div>
             <h2>Categories</h2>
             <ul>
-                {categories.map(category => (
-                    <li key={category.id}>{category.name}</li>
+                {categories.map((category) => (
+                    <li key={`${category.id}-${category.name}`}>{category.name}</li>
                 ))}
             </ul>
         </div>
