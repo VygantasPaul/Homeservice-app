@@ -28,11 +28,17 @@ const AvatarDropdown: React.FC = () => {
                             <li onClick={handleLogout}>Logout</li>
                         </>
                     ) : (
-                        <li onClick={() => navigate('/login')}>Login</li> // Show login option if not logged in
-                    )}
-                </ul>
+                        <>
+                            <li onClick={() => navigate('/login')}>Login</li>
+                        <li onClick={() => navigate('/register')}>Register</li>
+                        </>
+
+                        // Show login option if not logged in
             )}
-        </div>
+        </ul>
+    )
+}
+</div>
     );
 };
 
