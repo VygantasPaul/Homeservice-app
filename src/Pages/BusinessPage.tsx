@@ -9,7 +9,7 @@ interface Business {
 }
 
 const BusinessPage: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>(); // Fetch the business ID from the route params
     const [business, setBusiness] = useState<Business | null>(null);
     const [appointmentDate, setAppointmentDate] = useState<string>('');
     const [service, setService] = useState<string>('');
@@ -47,13 +47,14 @@ const BusinessPage: React.FC = () => {
 
         try {
             const appointmentData = {
-                user_id: user.id, // Assuming you have user ID
-                business_id: business._id, // Use the business ID from the fetched business data
+                userId: user._id,
+                businessId: business._id, // Assuming user ID is stored in localStorage
                 date: appointmentDate,
                 service,
             };
 
-            const response = await axios.post('http://localhost:5600/api/booking', appointmentData, {
+            // POST request to the modified endpoint with the business ID
+            const response = await axios.post(`http://localhost:5600/api/booking/business/${business._id}`, appointmentData, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
