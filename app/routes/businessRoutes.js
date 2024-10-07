@@ -1,47 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Business = require('../models/Business');
+const businessController = require('../controllers/businessController');
 
-// Gauti visus verslus
-router.get('/', async (req, res) => {
-    try {
-        const businesses = await Business.find();
-        res.json(businesses);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// Get all businesses
+router.get('/', businessController.getAllBusinesses);
 
-// Pridėti naują verslą
-router.post('/', async (req, res) => {
-    const business = new Business({
-        name: req.body.name,
-        category: req.body.category,
-        address: req.body.address,
-        phone: req.body.phone,
-        description: req.body.description,
-        services: req.body.services,
-        website: req.body.website,
-    });
+// Get a business by ID
+router.get('/:id', businessController.getBusinessById);
 
-    try {
-        const newBusiness = await business.save();
-        res.status(201).json(newBusiness);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
-// Gauti verslą pagal ID
-router.get('/:id', async (req, res) => {
-    try {
-        const business = await Business.findById(req.params.id);
-        if (!business) {
-            return res.status(404).json({ message: 'Verslas nerastas' });
-        }
-        res.json(business);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// Create a new business
+router.post('/', businessController.createBusiness);
 
 module.exports = router;
